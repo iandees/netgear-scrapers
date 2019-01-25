@@ -15,7 +15,7 @@ def uptime_to_seconds(uptime_str):
         return None
 
     delta = datetime.timedelta(
-        days=int(matches.group('days')),
+        days=int(matches.group('days')) if matches.group('days') else 0,
         hours=int(matches.group('hours')),
         minutes=int(matches.group('minutes')),
         seconds=int(matches.group('seconds')),
@@ -31,12 +31,26 @@ class R7000Parser(object):
     def fetch_data_points(self):
         # Use a session to store the XSRF cookie
         s = requests.Session()
+        s.auth = self._auth
 
         # Login once to get the XSRF
-        r = s.get('http://192.168.1.1/RST_stattbl.htm', auth=self._auth)
+        r = s.get('http://192.168.1.1/RST_stattbl.htm')
 
         # Login again to get the actual data
-        r = s.get('http://192.168.1.1/RST_stattbl.htm', auth=self._auth)
+        r = s.get('http://192.168.1.1/RST_stattbl.htm')
+
+        if 'MNU_access_multiLogin2.htm' in r.text:
+            # In newer firmware, you get an error message asking you to boot other people off
+            # so let's click the "yes" button
+            r = s.get('http://192.168.1.1/MNU_access_multiLogin2.htm')
+
+            match = re.search(r"form action=\"(\S*)\" method=\"POST\">", r.text)
+            form_url = match.group(1)
+
+            r = s.post('http://192.168.1.1/' + form_url, data={'act': 'yes'})
+
+        r = s.get('http://192.168.1.1/RST_stattbl.htm')
+
         if r.status_code != 200:
             print("bad response: ", r.status_code, r.text)
             sys.exit(1)
@@ -44,8 +58,6 @@ class R7000Parser(object):
         regex = r"class=\"(thead|ttext)\">(.*)<\/span>"
         matches = re.findall(regex, r.text, re.MULTILINE)
         matches = [a[1] for a in matches]
-
-        headers = matches[0:8]
 
         wan = InfluxDataPoint("router")\
             .with_tag('port', 'wan')\
