@@ -15,7 +15,7 @@ class NestThermostat(object):
             thermostat = napi.thermostats[0]
 
             n = InfluxDataPoint("thermostat")\
-                .with_tag('index', 0)\
+                .with_tag('device_id', thermostat.device_id)\
                 .with_field('mode', thermostat.mode)\
                 .with_field('hvac_state', thermostat.hvac_state)\
                 .with_field('fan', thermostat.fan)\
