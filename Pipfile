@@ -6,7 +6,7 @@ name = "pypi"
 [packages]
 requests = "*"
 apscheduler = "*"
-python-nest = "*"
+python-nest = "<4"
 
 [dev-packages]
 pylint = "*"

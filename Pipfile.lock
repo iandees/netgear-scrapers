@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "6d5e728a9d9baf3620ae7d95c4f1d52571921612a983d6684289518a722b6e0c"
+            "sha256": "ef9020d9edab9d873442565ec93980a4405f0428cceac4f10a335ddd572a33d6"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -54,10 +54,10 @@
         },
         "python-nest": {
             "hashes": [
-                "sha256:71f1c1a997af53bbff4e881dc0448b6969f004039fb8153882cb8b44d7f53e8a"
+                "sha256:e7525a9423bc1409810d8272c542421e991e6c9c00821816dd06ed6518a43123"
             ],
             "index": "pypi",
-            "version": "==4.1.0"
+            "version": "==3.7.0"
         },
         "pytz": {
             "hashes": [
@@ -80,12 +80,6 @@
                 "sha256:d16a0141ec1a18405cd4ce8b4613101da75da0e9a7aec5bdd4fa804d0e0eba73"
             ],
             "version": "==1.12.0"
-        },
-        "sseclient-py": {
-            "hashes": [
-                "sha256:db9a95a1f8cac6e71276599a604881ef6ca6c116208a81fd19d4cfbc70b7c918"
-            ],
-            "version": "==1.7"
         },
         "tzlocal": {
             "hashes": [
