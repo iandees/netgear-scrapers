@@ -13,7 +13,6 @@ def tick_router():
     p = R7000Parser('admin', os.environ.get('ROUTER_PASSWORD'))
     data = p.fetch_data_points()
     c = InfluxClient(influx_base)
-    print("Sending %d datapoints from the router to influx" % len(data))
     c.send_data_points(influx_db, data)
 
 
@@ -21,7 +20,6 @@ def tick_modem():
     p = CM1000Parser('admin', os.environ.get('MODEM_PASSWORD'))
     data = p.fetch_data_points()
     c = InfluxClient(influx_base)
-    print("Sending %d datapoints from the modem to influx" % len(data))
     c.send_data_points(influx_db, data)
 
 
@@ -33,7 +31,6 @@ def tick_nest():
     )
     data = p.fetch_data_points()
     c = InfluxClient(influx_base)
-    print("Sending %d datapoint from the thermostat to influx" % len(data))
     c.send_data_points(influx_db, data)
 
 
