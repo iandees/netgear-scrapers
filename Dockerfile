@@ -1,6 +1,6 @@
 FROM python:3
 
-RUN pip install pipenv
+RUN pip install pipenv mechanize
 WORKDIR /app
 
 COPY Pipfile .

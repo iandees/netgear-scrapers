@@ -14,8 +14,14 @@ fmt = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 fh.setFormatter(fmt)
 logger.addHandler(fh)
 
-influx_base = os.environ.get('INFLUX_URL')
-influx_db = os.environ.get('INFLUX_DB')
+INFLUX_HOST = os.environ.get('INFLUX_HOST', "localhost")
+INFLUX_PORT = os.environ.get('INFLUX_PORT', "8086")
+INFLUX_DB = os.environ.get('INFLUX_DB', "cablemodem")
+ROUTER_USER = os.environ.get('ROUTER_USER', "admin")
+ROUTER_PASS = os.environ.get('ROUTER_PASS', "password")
+MODEM_USER = os.environ.get('MODEM_USER', "admin")
+MODEM_PASS = os.environ.get('MODEM_PASS', "password")
+MODEM_AUTH = os.environ.get('MODEM_AUTH', "form")
 
 
 def skip_exception(function):
@@ -33,18 +39,18 @@ def skip_exception(function):
 
 @skip_exception
 def tick_router():
-    p = R7000Parser('admin', os.environ.get('ROUTER_PASSWORD'))
+    p = R7000Parser(ROUTER_USER, ROUTER_PASS)
     data = p.fetch_data_points()
-    c = InfluxClient(influx_base)
-    c.send_data_points(influx_db, data)
+    c = InfluxClient(f"http://{INFLUX_HOST}:{INFLUX_PORT}")
+    c.send_data_points(INFLUX_DB, data)
 
 
 @skip_exception
 def tick_modem():
-    p = CM1000Parser('admin', os.environ.get('MODEM_PASSWORD'))
+    p = CM1000Parser(MODEM_USER, MODEM_PASS, MODEM_AUTH)
     data = p.fetch_data_points()
-    c = InfluxClient(influx_base)
-    c.send_data_points(influx_db, data)
+    c = InfluxClient(f"http://{INFLUX_HOST}:{INFLUX_PORT}")
+    c.send_data_points(INFLUX_DB, data)
 
 
 @skip_exception
@@ -55,8 +61,8 @@ def tick_nest():
         os.environ.get('NEST_AUTH_CACHE')
     )
     data = p.fetch_data_points()
-    c = InfluxClient(influx_base)
-    c.send_data_points(influx_db, data)
+    c = InfluxClient(f"http://{INFLUX_HOST}:{INFLUX_PORT}")
+    c.send_data_points(INFLUX_DB, data)
 
 
 if __name__ == '__main__':
