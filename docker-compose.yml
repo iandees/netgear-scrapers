@@ -4,7 +4,7 @@ services:
     image: <username>/netgear-scrapers
     container_name: netgear-scrapers
     environment:
-      INFLUX_HOST: <hoist>
+      INFLUX_HOST: <host>
       INFLUX_PORT: 8086
       INFLUX_DB: cablemodem
       MODEM_USER: admin
