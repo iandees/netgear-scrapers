@@ -1,0 +1,17 @@
+version: '2'
+services:
+  netgear-scrapers:
+    image: <username>/netgear-scrapers
+    container_name: netgear-scrapers
+    environment:
+      INFLUX_HOST: <hoist>
+      INFLUX_PORT: 8086
+      INFLUX_DB: cablemodem
+      MODEM_USER: admin
+      MODEM_PASS: password
+      MODEM_AUTH: form
+      NEST_CLIENT_ID: <id here>
+      NEST_CLIENT_SECRET: <secret here>
+      NEST_AUTH_CACHE: <auth cache here>
+    restart: unless-stopped
+

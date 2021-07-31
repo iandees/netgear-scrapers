@@ -1,7 +1,7 @@
 # netgear-scrapers
 Scrapers to pull status data from Netgear R7000 routers and CM1000 cable modems and push them into InfluxDB.
 
-## Usage
+## Usage (CLI)
 
 Set the following environmental variables:
 ```
@@ -26,4 +26,16 @@ pip install mechanize
 Run it.
 ```
 python periodically.py
+```
+
+## Usage (Docker)
+Build it.
+```shell
+docker build -t <username>/netgear-scrapers.
+```
+Edit the `docker-compose.yml` file with your local details.
+Make sure to adjust the image name for whatever you build it as above.
+Run it.
+```shell
+docker-compose up -d
 ```
