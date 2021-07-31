@@ -18,9 +18,9 @@ NEST_CLIENT_SECRET
 NEST_AUTH_CACHE
 ```
 
-Install mechanize dependency
+Install dependencies
 ```
-pip install mechanize
+pipenv install --dev --deploy --system
 ```
 
 Run it.
